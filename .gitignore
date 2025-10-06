@@ -1,2 +1,4 @@
 exports/
 imports/
+venv/
+logs/
