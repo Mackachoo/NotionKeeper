@@ -5,7 +5,6 @@ import sys
 from element import Element
 from utils import Colors, Logger
 from typing import List
-from tqdm import tqdm
 
 
 class NotionKeeper:
@@ -148,23 +147,15 @@ class NotionKeeper:
         return total
 
     def map_all_elements(
-        self,
-        elements: List[Element],
-        functions: List[callable],
-        progress_bar: tqdm | None,
+        self, elements: List[Element], functions: List[callable]
     ) -> None:
         """Apply functions to all elements and their subelements in place."""
-        if progress_bar is None:
-            progress_bar = tqdm(
-                total=self.len_elements(elements), desc="Mapping elements"
-            )
         for element in elements:
             for function in functions:
                 function(element)
-            progress_bar.update(1)
             # Recursively apply to subelements
             if element.subelements:
-                self.map_all_elements(element.subelements, functions, progress_bar)
+                self.map_all_elements(element.subelements, functions)
 
     # * LegendKeeper Conversion Rules *#
 

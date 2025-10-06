@@ -1,47 +1,48 @@
 # NotionKeeper
 
-NotionKeeper converts a Notion export (markdown + asset folders) into a structure suitable for LegendKeeper.
+Convert Notion exports (Markdown + asset folders) into a LegendKeeper-friendly structure — fast, simple, and repeatable.
 
-This repository contains the conversion logic in `src/` and a small CLI wrapper at the project root for convenient command-line use.
+🚀 Quick facts
 
-Features
+- Purpose: Convert Notion-exported pages into a folder-per-page layout LegendKeeper can ingest.
+- Language: Python
+- CLI: `notionkeeper.py` (root)
 
-- Recursively reads Notion-exported markdown files and matching folders.
-- Cleans Notion IDs from page names, removes HTML, converts callouts and todo syntax, and strips links.
-- Writes the cleaned output into a folder-per-page layout that LegendKeeper can ingest.
-- Produces a plain-text log (color codes stripped) in `logs/` while keeping colored console output.
+✨ Highlights
 
-Requirements
+- 🔎 Recursively reads Notion-exported markdown files and matching asset folders
+- 🧹 Cleans page names (removes Notion IDs), strips HTML, converts callouts and todo syntax, and removes unwanted links
+- 📁 Writes cleaned output into `imports/` (one folder per page) so LegendKeeper can consume it
+- 📝 Writes plain-text logs to `logs/` while preserving colored console output for interactive runs
+
+## Requirements
 
 - Python 3.8+
-- tqdm (for progress display)
 
-Install
+## Quick start
 
-Install the small dependency used by the tool:
-
-```bash
-python3 -m pip install --upgrade tqdm
-```
-
-Quick usage (recommended)
-
-From the repository root you can run the bundled CLI wrapper:
+From the repository root run the bundled CLI wrapper:
 
 ```bash
 python3 notionkeeper.py --data exports --out imports
 ```
 
-Options
+Or just run the default behavior (reads `exports/` and writes `imports/`):
 
-- --data / -d    Path to the Notion export directory to read (default: `exports`)
-- --out  / -o    Output path where cleaned LegendKeeper-style folders will be written (default: `imports`)
-- --no-log       Disable writing a log file and only print to the console
-- -h / --help    Show help and exit
+```bash
+python3 notionkeeper.py
+```
 
-Examples
+## CLI options
 
-- Convert the default `exports/` folder into `imports/` (default behavior):
+- `--data / -d`    Path to the Notion export directory to read (default: `exports`)
+- `--out  / -o`    Output path where cleaned LegendKeeper-style folders will be written (default: `imports`)
+- `--no-log`       Disable writing a log file (only print to console)
+- `-h / --help`    Show help and exit
+
+## Examples
+
+- Convert the default `exports/` folder into `imports/` (default):
 
 ```bash
 python3 notionkeeper.py
@@ -53,18 +54,19 @@ python3 notionkeeper.py
 python3 notionkeeper.py -d exports/Kaleah -o imports/Kaleah
 ```
 
-Log files
+## Logs
 
 - If logging is enabled (default), a log file is written under `logs/notion_keeper_YYYYMMDD_HHMMSS.log`.
 
-Developer notes
+## Developer notes
 
-- The conversion logic lives in `src/converter.py`. The root `notionkeeper.py` is a small wrapper that inserts `src/` on the Python path and calls the `NotionKeeper` class.
+- Conversion logic: `src/converter.py`
+- CLI wrapper: `notionkeeper.py` (adds `src/` to PYTHONPATH and invokes the `NotionKeeper` class)
 
-Contributing
+## Contributing ❤️
 
-- Bug reports, improvements and pull requests are welcome. Keep changes small and add a short test or example when behavior changes.
+- Bug reports, improvements and pull requests are welcome. Please keep changes small and include a short test or example when behavior changes.
 
-License
+## License
 
 - See `LICENSE` in the repository root.
